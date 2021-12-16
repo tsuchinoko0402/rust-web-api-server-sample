@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: ./server
+      target: 'develop-stage'
+    ports:
+      - "8088:8088"
+    depends_on:
+      - db
+    volumes:
+      - ./server:/app
+      - cargo-cache:/usr/local/cargo/registry
+      - target-cache:/app/target
+    command: /bin/sh -c "diesel setup && cargo watch -x run"
+    tty: true
+  db:
+    build:
+      context: ./db
+    ports: 
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+volumes:
+  cargo-cache:
+  target-cache:
