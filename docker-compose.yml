@@ -8,7 +8,8 @@ services:
     ports:
       - "8088:8088"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./server:/app
       - cargo-cache:/usr/local/cargo/registry
@@ -26,6 +27,11 @@ services:
       POSTGRES_DB: postgres
     volumes:
       - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   cargo-cache:
