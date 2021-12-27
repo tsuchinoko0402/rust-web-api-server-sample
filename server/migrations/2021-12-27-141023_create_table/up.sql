@@ -1,0 +1,5 @@
+CREATE TABLE pokemon (
+    no INTEGER PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    type TEXT[] NOT NULL
+)
