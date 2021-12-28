@@ -1,8 +1,8 @@
-//! ポケモンの値オブジェクトの定義
+//! ポケモンのエンティティの定義
 
 use crate::domain::models::pokemon::{pokemon_name::PokemonName, pokemon_number::PokemonNumber, pokemon_types::PokemonTypes};
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Pokemon {
     pub number: PokemonNumber,
     pub name: PokemonName,
