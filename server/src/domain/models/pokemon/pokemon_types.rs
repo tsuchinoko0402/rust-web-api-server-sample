@@ -1,7 +1,7 @@
 //! ポケモンの複合タイプの値オブジェクト
 
-use std::convert::TryFrom;
 use crate::domain::models::pokemon::pokemon_type::PokemonType;
+use std::convert::TryFrom;
 
 /// ポケモンの複合タイプの定義。
 #[derive(PartialEq, Eq, Clone)]
@@ -38,7 +38,6 @@ impl From<PokemonTypes> for Vec<String> {
         ts
     }
 }
-
 
 #[cfg(test)]
 mod tests {

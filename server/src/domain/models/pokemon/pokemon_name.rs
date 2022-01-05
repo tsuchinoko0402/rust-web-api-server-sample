@@ -30,7 +30,7 @@ impl From<PokemonName> for String {
 #[cfg(test)]
 mod tests {
     use super::*;
-   
+
     #[test]
     fn pokemon_name_try_from_ok() {
         let good_name = String::from("hogehoge");
@@ -44,7 +44,7 @@ mod tests {
     fn pokemon_name_try_from_ng() {
         let bad_name = String::from("");
         let result = PokemonName::try_from(bad_name);
-        let expect =Err(());
+        let expect = Err(());
 
         assert!(result.eq(&expect));
     }

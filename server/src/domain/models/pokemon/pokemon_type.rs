@@ -5,11 +5,11 @@ use std::convert::TryFrom;
 /// ポケモンのタイプを表す。
 #[derive(PartialEq, Eq, Clone)]
 pub enum PokemonType {
-    Fire,       // ほのお
-    Water,      // みず
-    Grass,      // くさ
-    Electric,   // でんき
-    Flying,     // ひこう
+    Fire,     // ほのお
+    Water,    // みず
+    Grass,    // くさ
+    Electric, // でんき
+    Flying,   // ひこう
 }
 
 /// ポケモンのタイプの振る舞い: 文字列からタイプへの変換。
@@ -51,7 +51,7 @@ mod tests {
         let good_type = String::from("Fire");
         let result = PokemonType::try_from(good_type.clone());
         let expect = Ok(PokemonType::Fire);
-    
+
         assert!(result.eq(&expect));
     }
 
@@ -60,7 +60,7 @@ mod tests {
         let good_type = String::from("Water");
         let result = PokemonType::try_from(good_type.clone());
         let expect = Ok(PokemonType::Water);
-    
+
         assert!(result.eq(&expect));
     }
 
@@ -69,7 +69,7 @@ mod tests {
         let good_type = String::from("Grass");
         let result = PokemonType::try_from(good_type.clone());
         let expect = Ok(PokemonType::Grass);
-    
+
         assert!(result.eq(&expect));
     }
 
@@ -78,7 +78,7 @@ mod tests {
         let good_type = String::from("Electric");
         let result = PokemonType::try_from(good_type.clone());
         let expect = Ok(PokemonType::Electric);
-    
+
         assert!(result.eq(&expect));
     }
 
@@ -87,18 +87,16 @@ mod tests {
         let good_type = String::from("Flying");
         let result = PokemonType::try_from(good_type.clone());
         let expect = Ok(PokemonType::Flying);
-    
+
         assert!(result.eq(&expect));
     }
-    
+
     #[test]
     fn pokemon_type_try_from_ng() {
         let bad_type = String::from("Hoge");
         let result = PokemonType::try_from(bad_type.clone());
         let expect = Err(());
-    
+
         assert!(result.eq(&expect));
     }
 }
-
-
