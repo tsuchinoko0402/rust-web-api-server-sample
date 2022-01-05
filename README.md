@@ -34,3 +34,14 @@ docker-composed up -d
 docker-composed down
 ```
 
+## 動作例
+
+```
+$ curl -X POST -H "Content-Type: application/json" -d '{"number":1, "name":"test_name", "types": [ "Fire" ]}' localhost:8088/pokemon
+$ curl -X GET localhost:8088/pokemon/1
+{"number":1,"name":"test_name","types":["Fire"]}
+
+$ curl -X PUT -H "Content-Type: application/json" -d '{"number":1, "name":"test_name2", "types": [ "Water" ]}' localhost:8088/pokemon/1
+$ curl -X GET localhost:8088/pokemon/1
+{"number":1,"name":"test_name2","types":["Water"]}
+```

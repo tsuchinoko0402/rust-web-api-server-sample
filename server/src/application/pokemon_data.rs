@@ -2,7 +2,7 @@
 
 use std::convert::TryInto;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::domain::models::pokemon::pokemon::Pokemon;
 

@@ -83,7 +83,15 @@ impl PokemonRepository for PokemonRepositoryImpl {
 
     /// ポケモンデータを更新する
     fn update(&self, data: &Pokemon) -> Result<()> {
-        todo!()
+        let conn = self.pool.get()?;
+        let target_number: i32 = data.number.clone().try_into().unwrap();
+        let target_name: String = data.name.clone().try_into().unwrap();
+        let target_types: Vec<String> = data.types.clone().try_into().unwrap();
+        diesel::update(pokemon.find(target_number))
+            .set((name.eq(target_name), type_.eq(target_types)))
+            .execute(&conn)
+            .expect(&format!("Unable to find pokemon {}", target_number));
+        Ok(())
     }
 
     /// ポケモンデータを削除する
