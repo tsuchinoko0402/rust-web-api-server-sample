@@ -16,6 +16,18 @@ async fn post_pokemon(
     }
 }
 
+#[get("/pokemon/{number}")]
+async fn get_pokemon(
+    data: web::Data<RequestContext>,
+    path_params: web::Path<(i32,)>,
+) -> impl Responder {
+    let pokemon_application = PokemonApplicationService::new(data.pokemon_repository());
+    match pokemon_application.get(path_params.into_inner().0.into()) {
+        Ok(pokemon) => HttpResponse::Ok().json(pokemon),
+        Err(_) => HttpResponse::InternalServerError().json(""),
+    }
+}
+
 #[get("/")]
 async fn hello() -> impl Responder {
     HttpResponse::Ok().body("Hello world!")

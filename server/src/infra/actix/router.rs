@@ -20,6 +20,7 @@ pub async fn run() -> std::io::Result<()> {
             .data(RequestContext::new())
             .service(handlers::hello)
             .service(handlers::post_pokemon)
+            .service(handlers::get_pokemon)
     })
     .bind(format!("{}:{}", CONFIG.server_address, CONFIG.server_port))?
     .run()

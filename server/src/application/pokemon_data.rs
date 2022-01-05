@@ -2,8 +2,11 @@
 
 use std::convert::TryInto;
 
+use serde::{Serialize, Deserialize};
+
 use crate::domain::models::pokemon::pokemon::Pokemon;
 
+#[derive(Serialize, Deserialize, Clone)]
 pub struct PokemonData {
     number: i32,
     name: String,
