@@ -1,4 +1,6 @@
 use config::ConfigError;
+use dotenv::dotenv;
+use once_cell::sync::Lazy;
 use serde::Deserialize;
 
 /// .evnの内容を保存するstruct
@@ -17,3 +19,9 @@ impl Config {
         cfg.try_into()
     }
 }
+
+/// static変数の初期化
+pub static CONFIG: Lazy<Config> = Lazy::new(|| {
+    dotenv().ok();
+    Config::from_env().unwrap()
+});

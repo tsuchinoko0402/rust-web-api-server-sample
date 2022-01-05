@@ -24,11 +24,11 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
     }
 
     /// ポケモンの登録処理
-    pub fn register(&self, no: i32, name: String, types: Vec<String>) -> Result<()> {
+    pub fn register(&self, data: PokemonData) -> Result<()> {
         let pokemon = Pokemon::new(
-            PokemonNumber::try_from(no).unwrap(),
-            PokemonName::try_from(name).unwrap(),
-            PokemonTypes::try_from(types).unwrap(),
+            PokemonNumber::try_from(data.get_number()).unwrap(),
+            PokemonName::try_from(data.get_name().clone()).unwrap(),
+            PokemonTypes::try_from(data.get_types().clone()).unwrap(),
         );
 
         if self.pokemon_repository.exists(&pokemon) {
@@ -36,7 +36,7 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
                 "作成しようとしたポケモンが既に存在しています。"
             ));
         } else {
-            self.pokemon_repository.insert(&pokemon);
+            self.pokemon_repository.insert(&pokemon).unwrap();
         }
         Ok(())
     }
