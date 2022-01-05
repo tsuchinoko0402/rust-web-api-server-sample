@@ -12,9 +12,11 @@ serde = {version = "1.0.131", features = ["derive"]}
 
 log = "0.4.0"
 env_logger = "0.9.0"
+getset = "0.1.2"
 
 actix-web = "3.3.2"
 diesel = { version = "1.4.8", features = ["postgres", "r2d2", "chrono"] }
 chrono = "0.4.19"
 r2d2 = "0.8.9"
-thiserror = "1.0.30"
+thiserror = "1.0"
+anyhow = "1.0"
