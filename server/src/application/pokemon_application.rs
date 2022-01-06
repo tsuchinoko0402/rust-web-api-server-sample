@@ -74,8 +74,8 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
     pub fn delete(&self, command: PokemonDeleteCommand) -> Result<()> {
         let target_no = PokemonNumber::try_from(*command.get_number()).unwrap();
         match self.pokemon_repository.find_by_number(&target_no) {
-            Some(result) => {
-                self.pokemon_repository.delete(&result).unwrap();
+            Some(_) => {
+                self.pokemon_repository.delete(&target_no).unwrap();
                 Ok(())
             }
             None => Ok(()),

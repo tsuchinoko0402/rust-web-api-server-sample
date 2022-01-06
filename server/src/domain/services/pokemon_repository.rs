@@ -14,7 +14,7 @@ pub trait PokemonRepository {
     /// オブジェクトを再構築する振る舞い
     fn update(&self, pokemon: &Pokemon) -> Result<()>;
     /// オブジェクトを永続化（破棄）する振る舞い
-    fn delete(&self, pokemon: &Pokemon) -> Result<()>;
+    fn delete(&self, number: &PokemonNumber) -> Result<()>;
     /// 目的：作成したポケモンの重複確認を行う。
     /// exists: (Pokemon) -> bool
     fn exists(&self, pokemon: &Pokemon) -> bool {

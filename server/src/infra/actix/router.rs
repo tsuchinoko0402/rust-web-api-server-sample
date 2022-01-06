@@ -22,6 +22,7 @@ pub async fn run() -> std::io::Result<()> {
             .service(handlers::post_pokemon)
             .service(handlers::get_pokemon)
             .service(handlers::update_pokemon)
+            .service(handlers::delete_pokemon)
     })
     .bind(format!("{}:{}", CONFIG.server_address, CONFIG.server_port))?
     .run()
