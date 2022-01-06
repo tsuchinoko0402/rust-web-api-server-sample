@@ -4,7 +4,7 @@ use super::schema::pokemon;
 use super::schema::pokemon::dsl::*;
 use crate::domain::models::pokemon::{pokemon::Pokemon, pokemon_number::PokemonNumber};
 use crate::domain::services::pokemon_repository::PokemonRepository;
-use anyhow::{Context, Result};
+use anyhow::Result;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 use diesel::r2d2::{ConnectionManager, Pool};
@@ -95,7 +95,12 @@ impl PokemonRepository for PokemonRepositoryImpl {
     }
 
     /// ポケモンデータを削除する
-    fn delete(&self, data: &Pokemon) -> Result<()> {
-        todo!()
+    fn delete(&self, number: &PokemonNumber) -> Result<()> {
+        let conn = self.pool.get()?;
+        let target_number: i32 = number.clone().try_into().unwrap();
+        diesel::delete(pokemon.find(target_number))
+            .execute(&conn)
+            .expect("Error deleting pokemon");
+        Ok(())
     }
 }

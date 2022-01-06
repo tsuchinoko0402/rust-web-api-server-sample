@@ -1,6 +1,6 @@
 use std::convert::TryInto;
 
-use crate::domain::models::pokemon::{pokemon::Pokemon, pokemon_number::PokemonNumber};
+use crate::domain::models::pokemon::pokemon::Pokemon;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Default, Deserialize, Serialize)]
@@ -17,13 +17,5 @@ impl PokemonRequest {
             self.name.clone().try_into().unwrap(),
             self.types.clone().try_into().unwrap(),
         )
-    }
-
-    pub fn model(&self, number: PokemonNumber) -> Pokemon {
-        Pokemon {
-            number,
-            name: self.name.clone().try_into().unwrap(),
-            types: self.types.clone().try_into().unwrap(),
-        }
     }
 }

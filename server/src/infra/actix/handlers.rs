@@ -1,5 +1,7 @@
 use super::router::RequestContext;
-use crate::application::pokemon_application::{PokemonApplicationService, PokemonUpdateCommand, PokemonDeleteCommand};
+use crate::application::pokemon_application::{
+    PokemonApplicationService, PokemonDeleteCommand, PokemonUpdateCommand,
+};
 use crate::application::pokemon_data::PokemonData;
 use crate::infra::actix::request::PokemonRequest;
 use actix_web::{delete, get, post, put, web, web::Json, HttpResponse, Responder};
