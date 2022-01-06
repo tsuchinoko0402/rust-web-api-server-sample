@@ -7,8 +7,8 @@ use anyhow::Result;
 pub trait PokemonRepository {
     /// 番号からポケモンを探す
     fn find_by_number(&self, number: &PokemonNumber) -> Option<Pokemon>;
-    ///
-    fn list(&self) -> Result<Vec<Pokemon>>;
+    /// ポケモン一覧を表示する
+    fn list(&self) -> Option<Vec<Pokemon>>;
     /// オブジェクトを永続化（保存）する振る舞い
     fn insert(&self, pokemon: &Pokemon) -> Result<()>;
     /// オブジェクトを再構築する振る舞い

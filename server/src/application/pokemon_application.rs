@@ -50,6 +50,17 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
         }
     }
 
+    /// 登録されているポケモンの一覧を表示
+    pub fn list(&self) -> Result<Vec<PokemonData>> {
+        match self.pokemon_repository.list() {
+            Some(value) => Ok(value
+                .iter()
+                .map(|c| PokemonData::new(c.clone()))
+                .collect::<Vec<PokemonData>>()),
+            None => Err(anyhow::anyhow!("登録されたポケモンが1つもありません。")),
+        }
+    }
+
     /// ポケモンデータの更新処理
     pub fn update(&self, command: PokemonUpdateCommand) -> Result<()> {
         let target_no = PokemonNumber::try_from(*command.get_number()).unwrap();

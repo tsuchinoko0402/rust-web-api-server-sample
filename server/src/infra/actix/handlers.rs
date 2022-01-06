@@ -30,6 +30,15 @@ async fn get_pokemon(
     }
 }
 
+#[get("/pokemon")]
+async fn get_pokemon_list(data: web::Data<RequestContext>) -> impl Responder {
+    let pokemon_application = PokemonApplicationService::new(data.pokemon_repository());
+    match pokemon_application.list() {
+        Ok(pokemon) => HttpResponse::Ok().json(pokemon),
+        Err(_) => HttpResponse::InternalServerError().json(""),
+    }
+}
+
 #[put("/pokemon/{number}")]
 async fn update_pokemon(
     data: web::Data<RequestContext>,

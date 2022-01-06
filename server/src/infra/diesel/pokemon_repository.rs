@@ -43,10 +43,20 @@ pub struct PokemonRepositoryImpl {
 
 impl PokemonRepository for PokemonRepositoryImpl {
     /// ポケモンの一覧を出力する
-    fn list(&self) -> Result<Vec<Pokemon>> {
-        let conn = self.pool.get()?;
-        let res = pokemon.load::<PokemonEntity>(&conn).unwrap();
-        Ok(res.into_iter().map(|e| e.into()).collect())
+    fn list(&self) -> Option<Vec<Pokemon>> {
+        let conn = self.pool.get().unwrap();
+        match pokemon.load::<PokemonEntity>(&conn) {
+            Ok(result) => match result.len() {
+                0 => None,
+                _ => Some(
+                    result
+                        .iter()
+                        .map(|c| Pokemon::from(c.clone()))
+                        .collect::<Vec<Pokemon>>(),
+                ),
+            },
+            Err(_) => None,
+        }
     }
 
     /// 引数で渡した図鑑 No のポケモンを返却する
