@@ -2,7 +2,7 @@
 use std::convert::TryFrom;
 
 /// ポケモンの図鑑 No を表す。
-#[derive(PartialEq, Eq, Clone, PartialOrd, Ord)]
+#[derive(PartialEq, Eq, Clone, PartialOrd, Ord, Debug)]
 pub struct PokemonNumber(i32);
 
 /// ポケモンの図鑑 No の振る舞い：u16 から PokemonNumber への変換。

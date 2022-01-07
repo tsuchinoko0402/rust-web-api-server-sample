@@ -4,7 +4,7 @@ use super::schema::pokemon;
 use super::schema::pokemon::dsl::*;
 use crate::domain::models::pokemon::{pokemon::Pokemon, pokemon_number::PokemonNumber};
 use crate::domain::services::pokemon_repository::PokemonRepository;
-use anyhow::Result;
+use anyhow::{Context, Result};
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 use diesel::r2d2::{ConnectionManager, Pool};
@@ -43,41 +43,39 @@ pub struct PokemonRepositoryImpl {
 
 impl PokemonRepository for PokemonRepositoryImpl {
     /// ポケモンの一覧を出力する
-    fn list(&self) -> Option<Vec<Pokemon>> {
-        let conn = self.pool.get().unwrap();
+    fn list(&self) -> Result<Vec<Pokemon>> {
+        let conn = self.pool.get().context("failed to get connection")?;
         match pokemon.load::<PokemonEntity>(&conn) {
             Ok(result) => match result.len() {
-                0 => None,
-                _ => Some(
-                    result
-                        .iter()
-                        .map(|c| Pokemon::from(c.clone()))
-                        .collect::<Vec<Pokemon>>(),
-                ),
+                0 => Err(anyhow::anyhow!("Not Found Pokemon List")),
+                _ => Ok(result
+                    .iter()
+                    .map(|c| Pokemon::from(c.clone()))
+                    .collect::<Vec<Pokemon>>()),
             },
-            Err(_) => None,
+            Err(e) => Err(anyhow::anyhow!(e)),
         }
     }
 
     /// 引数で渡した図鑑 No のポケモンを返却する
-    fn find_by_number(&self, number: &PokemonNumber) -> Option<Pokemon> {
-        let conn = self.pool.get().unwrap();
+    fn find_by_number(&self, number: &PokemonNumber) -> Result<Pokemon> {
+        let conn = self.pool.get().context("failed to get connection")?;
         let target_num: i32 = number.clone().try_into().unwrap();
         match pokemon
             .filter(pokemon::no.eq(target_num))
             .load::<PokemonEntity>(&conn)
         {
             Ok(result) => match result.get(0) {
-                Some(value) => Some(Pokemon::from(value.clone())),
-                None => None,
+                Some(value) => Ok(Pokemon::from(value.clone())),
+                None => Err(anyhow::anyhow!("Not Found Pokemon number:{}", target_num)),
             },
-            Err(_) => None,
+            Err(e) => Err(anyhow::anyhow!(e)),
         }
     }
 
     /// ポケモンデータを挿入する
     fn insert(&self, data: &Pokemon) -> Result<()> {
-        let conn = self.pool.get()?;
+        let conn = self.pool.get().context("failed to get connection")?;
         let new_pokemon = NewPokemon {
             no: data.number.clone().try_into().unwrap(),
             name: data.name.clone().try_into().unwrap(),
@@ -93,7 +91,7 @@ impl PokemonRepository for PokemonRepositoryImpl {
 
     /// ポケモンデータを更新する
     fn update(&self, data: &Pokemon) -> Result<()> {
-        let conn = self.pool.get()?;
+        let conn = self.pool.get().context("failed to get connection")?;
         let target_number: i32 = data.number.clone().try_into().unwrap();
         let target_name: String = data.name.clone().try_into().unwrap();
         let target_types: Vec<String> = data.types.clone().try_into().unwrap();
@@ -106,7 +104,7 @@ impl PokemonRepository for PokemonRepositoryImpl {
 
     /// ポケモンデータを削除する
     fn delete(&self, number: &PokemonNumber) -> Result<()> {
-        let conn = self.pool.get()?;
+        let conn = self.pool.get().context("failed to get connection")?;
         let target_number: i32 = number.clone().try_into().unwrap();
         diesel::delete(pokemon.find(target_number))
             .execute(&conn)

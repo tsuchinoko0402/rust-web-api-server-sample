@@ -1,6 +1,6 @@
 use super::handlers;
 use crate::config::CONFIG;
-use actix_web::{App, HttpServer};
+use actix_web::{App, HttpServer, middleware::Logger};
 use diesel::{
     r2d2::{ConnectionManager, Pool},
     PgConnection,
@@ -11,13 +11,11 @@ use crate::domain::services::pokemon_repository::PokemonRepository;
 #[actix_web::main]
 pub async fn run() -> std::io::Result<()> {
     dotenv::dotenv().ok();
-    std::env::set_var("RUST_LOG", "debug");
-    env_logger::init();
-    std::env::set_var("RUST_BACKTRACE", "1");
 
     HttpServer::new(|| {
         App::new()
             .data(RequestContext::new())
+            .wrap(Logger::default())
             .service(handlers::hello)
             .service(handlers::post_pokemon)
             .service(handlers::get_pokemon)

@@ -45,19 +45,22 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
     pub fn get(&self, no: i32) -> Result<PokemonData> {
         let number = PokemonNumber::try_from(no).unwrap();
         match self.pokemon_repository.find_by_number(&number) {
-            Some(value) => Ok(PokemonData::new(value)),
-            None => Err(anyhow::anyhow!("取得しようとしたポケモンが存在しません。")),
+            Ok(value) => Ok(PokemonData::new(value)),
+            Err(_) => Err(anyhow::anyhow!(
+                "取得しようとしたポケモンが存在しません: no {:?}",
+                number
+            )),
         }
     }
 
     /// 登録されているポケモンの一覧を表示
     pub fn list(&self) -> Result<Vec<PokemonData>> {
         match self.pokemon_repository.list() {
-            Some(value) => Ok(value
+            Ok(value) => Ok(value
                 .iter()
                 .map(|c| PokemonData::new(c.clone()))
                 .collect::<Vec<PokemonData>>()),
-            None => Err(anyhow::anyhow!("登録されたポケモンが1つもありません。")),
+            Err(_) => Err(anyhow::anyhow!("登録されたポケモンが1つもありません。")),
         }
     }
 
@@ -65,7 +68,7 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
     pub fn update(&self, command: PokemonUpdateCommand) -> Result<()> {
         let target_no = PokemonNumber::try_from(*command.get_number()).unwrap();
         match self.pokemon_repository.find_by_number(&target_no) {
-            Some(mut result) => {
+            Ok(mut result) => {
                 result.name = match command.get_name() {
                     Some(value) => PokemonName::try_from(value.clone()).unwrap(),
                     None => PokemonName::try_from(String::from("名前未設定")).unwrap(),
@@ -77,7 +80,10 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
                 self.pokemon_repository.update(&result).unwrap();
                 Ok(())
             }
-            None => Err(anyhow::anyhow!("更新しようとしたポケモンが存在しません。")),
+            Err(_) => Err(anyhow::anyhow!(
+                "更新しようとしたポケモンが存在しません: no {:?}",
+                target_no
+            )),
         }
     }
 
@@ -85,11 +91,12 @@ impl<T: PokemonRepository> PokemonApplicationService<T> {
     pub fn delete(&self, command: PokemonDeleteCommand) -> Result<()> {
         let target_no = PokemonNumber::try_from(*command.get_number()).unwrap();
         match self.pokemon_repository.find_by_number(&target_no) {
-            Some(_) => {
+            Ok(_) => {
                 self.pokemon_repository.delete(&target_no).unwrap();
                 Ok(())
             }
-            None => Ok(()),
+            // エラーの場合でも対象のデータが存在しないので、消去は成功しているものとして OK にする。
+            Err(_) => Ok(()),
         }
     }
 }
