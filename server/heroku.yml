@@ -1,0 +1,12 @@
+build:
+  docker:
+    web:
+      dockerfile: Dockerfile
+      target: production
+    migration:
+      dockerfile: Dockerfile
+      target: build-stage
+release:
+  image: migration
+  command:
+    - diesel setup
