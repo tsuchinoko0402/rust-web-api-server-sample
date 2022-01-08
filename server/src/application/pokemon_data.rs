@@ -1,15 +1,17 @@
 //! ポケモンのドメインオブジェクトのための DTO
 
+use crate::domain::models::pokemon::pokemon::Pokemon;
+use getset::Getters;
+use serde::{Deserialize, Serialize};
 use std::convert::TryInto;
 
-use serde::{Deserialize, Serialize};
-
-use crate::domain::models::pokemon::pokemon::Pokemon;
-
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Getters, PartialEq, Eq, Debug)]
 pub struct PokemonData {
+    #[getset(get = "pub with_prefix")]
     number: i32,
+    #[getset(get = "pub with_prefix")]
     name: String,
+    #[getset(get = "pub with_prefix")]
     types: Vec<String>,
 }
 
@@ -20,17 +22,5 @@ impl PokemonData {
             name: source.name.try_into().unwrap(),
             types: source.types.try_into().unwrap(),
         }
-    }
-
-    pub fn get_number(&self) -> i32 {
-        self.number
-    }
-
-    pub fn get_name(&self) -> &String {
-        &self.name
-    }
-
-    pub fn get_types(&self) -> &Vec<String> {
-        &self.types
     }
 }

@@ -3,13 +3,14 @@
 use std::convert::TryFrom;
 
 /// ポケモンのタイプを表す。
-#[derive(PartialEq, Eq, Clone)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 pub enum PokemonType {
     Fire,     // ほのお
     Water,    // みず
     Grass,    // くさ
     Electric, // でんき
     Flying,   // ひこう
+    Unknown,  // 不明
 }
 
 /// ポケモンのタイプの振る舞い: 文字列からタイプへの変換。
@@ -24,6 +25,7 @@ impl TryFrom<String> for PokemonType {
             "Grass" => Ok(Self::Grass),
             "Electric" => Ok(Self::Electric),
             "Flying" => Ok(Self::Flying),
+            "Unknown" => Ok(Self::Unknown),
             _ => Err(()),
         }
     }
@@ -38,6 +40,7 @@ impl From<PokemonType> for String {
             PokemonType::Grass => "Grass",
             PokemonType::Electric => "Electric",
             PokemonType::Flying => "Flying",
+            PokemonType::Unknown => "Unknown",
         })
     }
 }

@@ -1,6 +1,6 @@
 use super::handlers;
 use crate::config::CONFIG;
-use actix_web::{App, HttpServer, middleware::Logger};
+use actix_web::{middleware::Logger, App, HttpServer};
 use diesel::{
     r2d2::{ConnectionManager, Pool},
     PgConnection,

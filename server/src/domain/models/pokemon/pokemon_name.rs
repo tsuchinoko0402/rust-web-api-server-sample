@@ -3,7 +3,7 @@
 use std::convert::TryFrom;
 
 /// ポケモンの名前を表す。
-#[derive(PartialEq, Eq, Clone)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 pub struct PokemonName(String);
 
 /// ポケモンの名前の振る舞い：String から PokemonName への変換。

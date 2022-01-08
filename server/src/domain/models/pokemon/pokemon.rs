@@ -4,7 +4,7 @@ use crate::domain::models::pokemon::{
     pokemon_name::PokemonName, pokemon_number::PokemonNumber, pokemon_types::PokemonTypes,
 };
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Debug)]
 pub struct Pokemon {
     pub number: PokemonNumber,
     pub name: PokemonName,

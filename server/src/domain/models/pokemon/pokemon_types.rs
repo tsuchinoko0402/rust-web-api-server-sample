@@ -4,7 +4,7 @@ use crate::domain::models::pokemon::pokemon_type::PokemonType;
 use std::convert::TryFrom;
 
 /// ポケモンの複合タイプの定義。
-#[derive(PartialEq, Eq, Clone)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 pub struct PokemonTypes(Vec<PokemonType>);
 
 /// ポケモンの複合タイプの振る舞い：Vec<String> から PokemonTypes への変換。
