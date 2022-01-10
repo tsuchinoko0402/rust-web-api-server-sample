@@ -8,6 +8,7 @@ COPY . .
 
 # ビルド環境
 FROM develop-stage as build-stage
+RUN update-ca-certificates
 RUN cargo build --release
 
 # 本番環境
