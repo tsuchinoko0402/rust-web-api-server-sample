@@ -5,12 +5,10 @@ RUN cargo install cargo-watch
 RUN apt install -y libpq-dev
 RUN cargo install diesel_cli
 COPY . .
-
 # ビルド環境
 FROM develop-stage as build-stage
 RUN update-ca-certificates
 RUN cargo build --release
-
 # 本番環境
 FROM rust:1.57.0-slim-buster as production-stage
 RUN apt-get update
