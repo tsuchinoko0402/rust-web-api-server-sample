@@ -6,7 +6,7 @@ build:
   docker:
     web:
       dockerfile: ./server/Dockerfile
-      target: production
+      target: production-stage
     migration:
       dockerfile: ./server/Dockerfile
       target: build-stage
