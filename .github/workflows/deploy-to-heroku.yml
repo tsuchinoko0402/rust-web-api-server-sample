@@ -18,3 +18,4 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
           appdir: server
+          env_file: ./server/.env
