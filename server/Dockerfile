@@ -15,4 +15,4 @@ RUN apt-get update
 RUN apt-get install libpq-dev -y
 COPY --from=build-stage /app/target/release/actix_web_sample .
 EXPOSE 8088
-CMD ["/usr/local/bin/api"]
+CMD ["/usr/local/bin/actix_web_sample"]
