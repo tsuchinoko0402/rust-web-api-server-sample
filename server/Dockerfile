@@ -13,6 +13,6 @@ RUN cargo build --release
 FROM rust:1.57.0-slim-buster as production-stage
 RUN apt-get update
 RUN apt-get install libpq-dev -y
-COPY --from=build-stage /app/target/release/api .
+COPY --from=build-stage /app/target/release/actix_web_sample .
 EXPOSE 8088
 CMD ["/usr/local/bin/api"]
