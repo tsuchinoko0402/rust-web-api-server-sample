@@ -16,6 +16,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "rust-web-api-server-sample"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
+          buildpack: "https://github.com/emk/heroku-buildpack-rust.git"
           usedocker: true
           appdir: server
           env_file: ./.env
