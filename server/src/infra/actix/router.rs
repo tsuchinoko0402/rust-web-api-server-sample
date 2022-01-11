@@ -11,6 +11,10 @@ use crate::domain::services::pokemon_repository::PokemonRepository;
 #[actix_web::main]
 pub async fn run() -> std::io::Result<()> {
     dotenv::dotenv().ok();
+    let port = std::env::var("PORT")
+        .ok()
+        .map(|val| val.parse::<u16>())
+        .unwrap_or(Ok(CONFIG.server_port));
 
     HttpServer::new(|| {
         App::new()
@@ -23,7 +27,7 @@ pub async fn run() -> std::io::Result<()> {
             .service(handlers::delete_pokemon)
             .service(handlers::get_pokemon_list)
     })
-    .bind(format!("{}:{}", CONFIG.server_address, CONFIG.port))?
+    .bind(format!("{}:{}", CONFIG.server_address, port.unwrap()))?
     .run()
     .await
 }
