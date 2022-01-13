@@ -19,4 +19,7 @@ jobs:
           buildpack: "https://github.com/emk/heroku-buildpack-rust.git"
           usedocker: true
           appdir: server
-          env_file: ./.env
+        env:
+          SERVER_ADDRESS: 0.0.0.0
+          SERVER_PORT: 8080
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
