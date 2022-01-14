@@ -2,8 +2,10 @@ use super::router::RequestContext;
 use crate::application::pokemon_delete_service::PokemonDeleteService;
 use crate::application::pokemon_get_service::PokemonGetService;
 use crate::application::pokemon_list_service::PokemonListService;
-use crate::application::pokemon_update_service::{PokemonUpdateService, PokemonUpdateCommand};
-use crate::application::{pokemon_data::PokemonData, pokemon_register_service::PokemonRegisterService};
+use crate::application::pokemon_update_service::{PokemonUpdateCommand, PokemonUpdateService};
+use crate::application::{
+    pokemon_data::PokemonData, pokemon_register_service::PokemonRegisterService,
+};
 use crate::infra::actix::request::PokemonRequest;
 use actix_web::{delete, get, post, put, web, web::Json, HttpResponse, Responder};
 use serde::Serialize;
@@ -22,16 +24,14 @@ async fn post_pokemon(
     let pokemon_application = PokemonRegisterService::new(data.pokemon_repository());
     let data = PokemonData::new(request.of());
     match pokemon_application.handle(data.clone()) {
-        Ok(_) => {
-            HttpResponse::Ok().body("SUCCESS Register Pokemon")
-        },
+        Ok(_) => HttpResponse::Ok().body("SUCCESS Register Pokemon"),
         Err(_) => {
             let response = ErrorResponse {
                 message: format!("FAILURE Register Pokemon: {:?}", data.clone()),
                 r#type: "get_pokemon_error".to_string(),
             };
             HttpResponse::InternalServerError().json(response)
-        },
+        }
     }
 }
 
@@ -43,16 +43,14 @@ async fn get_pokemon(
     let pokemon_application = PokemonGetService::new(data.pokemon_repository());
     let no = path_params.into_inner().0.into();
     match pokemon_application.handle(no) {
-        Ok(pokemon) => {
-            HttpResponse::Ok().json(pokemon)
-        },
+        Ok(pokemon) => HttpResponse::Ok().json(pokemon),
         Err(_) => {
             let response = ErrorResponse {
                 message: format!("FAILURE Get Pokemon: no {:?}", no),
                 r#type: "get_pokemon_list_error".to_string(),
             };
             HttpResponse::InternalServerError().json(response)
-        },
+        }
     }
 }
 
@@ -67,7 +65,7 @@ async fn get_pokemon_list(data: web::Data<RequestContext>) -> impl Responder {
                 r#type: "get_pokemon_list_error".to_string(),
             };
             HttpResponse::InternalServerError().json(response)
-        },
+        }
     }
 }
 
@@ -90,7 +88,7 @@ async fn update_pokemon(
                 r#type: "update_pokemon_error".to_string(),
             };
             HttpResponse::InternalServerError().json(response)
-        },
+        }
     }
 }
 
@@ -109,7 +107,7 @@ async fn delete_pokemon(
                 r#type: "delete_pokemon_error".to_string(),
             };
             HttpResponse::InternalServerError().json(response)
-        },
+        }
     }
 }
 

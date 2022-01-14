@@ -1,8 +1,9 @@
 //! ポケモン削除処理のためのアプリケーションサービス。
 //! 削除処理のユースケースの振る舞いを定義する。
 
-use crate::domain::models::pokemon::pokemon_number::PokemonNumber;
-use crate::domain::services::pokemon_repository::PokemonRepository;
+use crate::domain::models::pokemon::{
+    pokemon_number::PokemonNumber, pokemon_repository::PokemonRepository,
+};
 use anyhow::Result;
 use std::convert::TryFrom;
 

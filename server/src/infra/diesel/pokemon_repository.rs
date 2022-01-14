@@ -2,8 +2,9 @@
 
 use super::schema::pokemon;
 use super::schema::pokemon::dsl::*;
-use crate::domain::models::pokemon::{pokemon::Pokemon, pokemon_number::PokemonNumber};
-use crate::domain::services::pokemon_repository::PokemonRepository;
+use crate::domain::models::pokemon::{
+    pokemon::Pokemon, pokemon_number::PokemonNumber, pokemon_repository::PokemonRepository,
+};
 use anyhow::{Context, Result};
 use diesel::pg::PgConnection;
 use diesel::prelude::*;

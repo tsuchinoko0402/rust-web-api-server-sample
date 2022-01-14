@@ -2,7 +2,7 @@
 //! 更新処理のユースケースの振る舞いを定義する
 
 use super::pokemon_data::PokemonData;
-use crate::domain::services::pokemon_repository::PokemonRepository;
+use crate::domain::models::pokemon::pokemon_repository::PokemonRepository;
 use anyhow::Result;
 
 /// アプリケーションサービスの構造体。

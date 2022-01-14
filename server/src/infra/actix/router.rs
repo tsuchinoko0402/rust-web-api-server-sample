@@ -1,12 +1,10 @@
 use super::handlers;
-use crate::config::CONFIG;
+use crate::{config::CONFIG, domain::models::pokemon::pokemon_repository::PokemonRepository};
 use actix_web::{middleware::Logger, App, HttpServer};
 use diesel::{
     r2d2::{ConnectionManager, Pool},
     PgConnection,
 };
-
-use crate::domain::services::pokemon_repository::PokemonRepository;
 
 #[actix_web::main]
 pub async fn run() -> std::io::Result<()> {

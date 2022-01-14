@@ -1,11 +1,11 @@
 //! ポケモン更新処理のためのアプリケーションサービス。
 //! 更新処理のユースケースの振る舞いを定義する。
 
+use crate::domain::models::pokemon::pokemon_repository::PokemonRepository;
 use crate::domain::models::pokemon::{
     pokemon::Pokemon, pokemon_name::PokemonName, pokemon_number::PokemonNumber,
     pokemon_types::PokemonTypes,
 };
-use crate::domain::services::pokemon_repository::PokemonRepository;
 use anyhow::Result;
 use getset::{Getters, Setters};
 use std::convert::TryFrom;

@@ -4,12 +4,9 @@
 use anyhow::Result;
 use std::convert::TryFrom;
 
-use crate::domain::{
-    models::pokemon::{
-        pokemon::Pokemon, pokemon_name::PokemonName, pokemon_number::PokemonNumber,
-        pokemon_types::PokemonTypes,
-    },
-    services::pokemon_repository::PokemonRepository,
+use crate::domain::models::pokemon::{
+    pokemon::Pokemon, pokemon_name::PokemonName, pokemon_number::PokemonNumber,
+    pokemon_repository::PokemonRepository, pokemon_types::PokemonTypes,
 };
 
 use super::pokemon_data::PokemonData;

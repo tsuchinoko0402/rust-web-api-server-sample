@@ -3,7 +3,7 @@
 
 use super::pokemon_data::PokemonData;
 use crate::domain::models::pokemon::pokemon_number::PokemonNumber;
-use crate::domain::services::pokemon_repository::PokemonRepository;
+use crate::domain::models::pokemon::pokemon_repository::PokemonRepository;
 use anyhow::Result;
 use std::convert::TryFrom;
 
