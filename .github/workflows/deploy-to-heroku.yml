@@ -19,5 +19,8 @@ jobs:
           buildpack: "https://github.com/emk/heroku-buildpack-rust.git"
           usedocker: true
           appdir: server
+          healthcheck: "https://rust-web-api-server-sample.herokuapp.com/health"
+          checkstring: "Ok"
+          rollbackonhealthcheckfailed: true
       - run: |
           heroku config:set SERVER_ADDRESS=0.0.0.0 SERVER_PORT=8080 DATABASE_URL=${{secrets.DATABASE_URL}}
