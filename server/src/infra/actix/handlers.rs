@@ -113,7 +113,7 @@ async fn delete_pokemon(
     }
 }
 
-#[get("/")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello world!")
+#[get("/health")]
+async fn health() -> impl Responder {
+    HttpResponse::Ok().body("Ok")
 }

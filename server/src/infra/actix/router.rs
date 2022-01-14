@@ -20,7 +20,7 @@ pub async fn run() -> std::io::Result<()> {
         App::new()
             .data(RequestContext::new())
             .wrap(Logger::default())
-            .service(handlers::hello)
+            .service(handlers::health)
             .service(handlers::post_pokemon)
             .service(handlers::get_pokemon)
             .service(handlers::update_pokemon)
