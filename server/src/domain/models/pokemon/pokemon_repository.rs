@@ -4,7 +4,7 @@ use crate::domain::models::pokemon::{pokemon::Pokemon, pokemon_number::PokemonNu
 use anyhow::Result;
 
 /// Pokemon のリポジトリインタフェース
-pub trait PokemonRepository: Send + Sync {
+pub trait PokemonRepository {
     /// 番号からポケモンを探す
     fn find_by_number(&self, number: &PokemonNumber) -> Result<Pokemon>;
 
