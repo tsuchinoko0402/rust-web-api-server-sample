@@ -10,8 +10,8 @@ FROM develop-stage as build-stage
 RUN update-ca-certificates
 RUN cargo build --release
 # 本番環境
-FROM rust:1.57.0-slim-buster as production-stage
+FROM debian:bullseye-slim as production-stage
 RUN apt-get update
-RUN apt-get install libpq-dev -y
+RUN apt-get install libpq5 -y
 COPY --from=build-stage /app/target/release/actix_web_sample .
 CMD ["./actix_web_sample"]
