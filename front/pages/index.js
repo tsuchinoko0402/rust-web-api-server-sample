@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  return <h1>Next.jsのVercelへのデプロイ完了！</h1>;
+  return <h1>Next.jsのVercelへのデプロイ完了！（変更してみました。）</h1>;
 }
 
 // export default function Home() {
