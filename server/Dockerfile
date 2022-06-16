@@ -1,5 +1,5 @@
 # 開発環境
-FROM rust:1.57.0 as develop-stage
+FROM rust:1-buster as develop-stage
 WORKDIR /app
 RUN cargo install cargo-watch
 RUN apt install -y libpq-dev
@@ -10,7 +10,7 @@ FROM develop-stage as build-stage
 RUN update-ca-certificates
 RUN cargo build --release
 # 本番環境
-FROM rust:1.57.0-slim-buster as production-stage
+FROM rust:1-slim-buster as production-stage
 RUN apt-get update
 RUN apt-get install libpq-dev -y
 COPY --from=build-stage /app/target/release/actix_web_sample .
