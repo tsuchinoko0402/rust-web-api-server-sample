@@ -1,6 +1,7 @@
 use super::handlers;
-use crate::{config::CONFIG, domain::models::pokemon::pokemon_repository::PokemonRepository};
+use crate::{config::CONFIG, domain::models::pokemon::pokemon_repository::PokemonRepository, validator};
 use actix_web::{middleware::Logger, App, HttpServer};
+use actix_web_httpauth::middleware::HttpAuthentication;
 use diesel::{
     r2d2::{ConnectionManager, Pool},
     PgConnection,
@@ -15,8 +16,10 @@ pub async fn run() -> std::io::Result<()> {
         .unwrap_or(CONFIG.server_port);
 
     HttpServer::new(|| {
+        let auth = HttpAuthentication::bearer(validator);
         App::new()
-            .data(RequestContext::new())
+            .wrap(auth)
+            .app_data(RequestContext::new())
             .wrap(Logger::default())
             .service(handlers::health)
             .service(handlers::post_pokemon)

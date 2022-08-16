@@ -16,8 +16,11 @@ log = "0.4.0"
 simplelog = "0.11.1"
 getset = "0.1.2"
 
-actix-web = "3.3.2"
+actix-web = "4.1.0"
 diesel = { version = "1.4.8", features = ["postgres", "r2d2", "chrono"] }
 chrono = "0.4.19"
 r2d2 = "0.8.9"
 anyhow = { version = "1", features = ["backtrace"] }
+actix-web-httpauth = "0.6.0"
+alcoholic_jwt = "4091.0.0"
+reqwest = { version = "0.11.10", features = ["json"] }
