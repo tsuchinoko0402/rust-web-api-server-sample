@@ -5,7 +5,7 @@
 ## 必要要件
 
 - Docker
-- docker-composed
+- docker-compose
 - Rust
 - diesel
 
@@ -19,19 +19,19 @@ $ cargo install
 ### ビルド方法
 
 ```term
-docker-composed build
+docker-compose build
 ```
 
 ### 起動方法
 
 ```term
-docker-composed up -d
+docker-compose up -d
 ```
 
 ### 終了方法
 
 ```term
-docker-composed down
+docker-compose down
 ```
 
 ## 動作例

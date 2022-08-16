@@ -1,5 +1,5 @@
 # 開発環境
-FROM rust:1.57.0 as develop-stage
+FROM rust:1-buster as develop-stage
 WORKDIR /app
 RUN cargo install cargo-watch
 RUN apt install -y libpq-dev
