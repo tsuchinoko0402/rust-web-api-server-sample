@@ -1,6 +1,6 @@
 use super::handlers;
 use crate::{config::CONFIG, domain::models::pokemon::pokemon_repository::PokemonRepository};
-use actix_web::{middleware::Logger, App, HttpServer};
+use actix_web::{middleware::Logger, App, HttpServer, web};
 use diesel::{
     r2d2::{ConnectionManager, Pool},
     PgConnection,
@@ -16,7 +16,7 @@ pub async fn run() -> std::io::Result<()> {
 
     HttpServer::new(|| {
         App::new()
-            .app_data(RequestContext::new())
+            .app_data(web::Data::new(RequestContext::new()).clone())
             .wrap(Logger::default())
             .service(handlers::health)
             .service(handlers::post_pokemon)
