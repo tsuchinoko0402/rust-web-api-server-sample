@@ -44,7 +44,7 @@ fn main() -> std::io::Result<()> {
     infra::actix::router::run()
 }
 
-async fn validator(req: ServiceRequest, credentials: BearerAuth) -> Result<ServiceRequest, Error> {
+async fn validator(req: ServiceRequest, credentials: BearerAuth) -> Result<ServiceRequest, (Error, ServiceRequest)> {
     let config = req
         .app_data::<Config>()
         .map(|data| data.clone())
@@ -54,9 +54,9 @@ async fn validator(req: ServiceRequest, credentials: BearerAuth) -> Result<Servi
             if res == true {
                 Ok(req)
             } else {
-                Err(AuthenticationError::from(config).into())
+                Err((AuthenticationError::from(config).into(), req))
             }
         }
-        Err(_) => Err(AuthenticationError::from(config).into()),
+        Err(_) => Err((AuthenticationError::from(config).into(), req)),
     }
 }
